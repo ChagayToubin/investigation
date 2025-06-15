@@ -1,0 +1,15 @@
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.AssemblyInfo.cs
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.sourcelink.json
+C:\Users\User\source\repos\investigationChagay\bin\Debug\net8.0\investigationChagay.exe
+C:\Users\User\source\repos\investigationChagay\bin\Debug\net8.0\investigationChagay.deps.json
+C:\Users\User\source\repos\investigationChagay\bin\Debug\net8.0\investigationChagay.runtimeconfig.json
+C:\Users\User\source\repos\investigationChagay\bin\Debug\net8.0\investigationChagay.dll
+C:\Users\User\source\repos\investigationChagay\bin\Debug\net8.0\investigationChagay.pdb
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.dll
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\refint\investigationChagay.dll
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.pdb
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\investigationChagay.genruntimeconfig.cache
+C:\Users\User\source\repos\investigationChagay\obj\Debug\net8.0\ref\investigationChagay.dll
