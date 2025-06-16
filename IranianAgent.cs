@@ -8,18 +8,34 @@ namespace investigationChagay
 {
     public class IranianAgent
     {
-        public List<Sensor> listSensor;
         public string Name;
+
         public int Rank;
 
-        public List<string> gessList;
+        public int LevelRank;
+        public int countFalse = 0;
+        public int countGessTrueFalse = 0;//סןפר את כל התשובות נכון ולא נכון
+
+        public List<Sensor> listSensor;//רשימה מקורית לא נוגיעם בבה
+
+        
+        public List<string> gessList;//מה נשאר לו לנחש /להדליק
+
         public int countTrueGess = 0;
-        public IranianAgent(string name,int rank,List<Sensor>list)
+
+        public List<string> TrueGessList;//פן מופיע כל מה שניחש ודלוק
+        public IranianAgent(string name,int rank,List<Sensor>list,int levelRank )
         {
             Name = name;
             Rank = rank;
             listSensor = list;
-            gessList = CopySensorNamesToList();
+            LevelRank = levelRank;
+
+
+
+            TrueGessList = new List<string>();//מה נחשו נכון ומתאים לרישמה
+
+             gessList = CopySensorNamesToList();//נשאר לננחש
 
 
         }
@@ -34,6 +50,20 @@ namespace investigationChagay
             }
 
             return result;
+        }
+        public void printInfo()
+        {
+            Console.WriteLine( this.Name +" "+this.Rank );
+        }
+
+    }
+    public class SquadLeader: IranianAgent
+    {
+
+        public SquadLeader(string name, int rank, List<Sensor> list,int levelRank) : base(name,rank,list, levelRank)
+        {
+
+
         }
 
     }
