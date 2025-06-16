@@ -12,90 +12,157 @@ namespace investigationChagay
 
         public void Game()
         {
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    {
+                        iranian = initGame(1);
+                        gameLevel(iranian);
+                    }
+                    break;
+                case "2":
+
+                    {
+                        iranian = initGame(2);
+
+                        gameLevel(iranian);
+                    }
+                    break;
+                default:
+
+                    {
+                        Console.WriteLine("!@#$%^&*()");
+                        Game();
+                    }
+                    break;
+
+            }
+
+
+
+
+
+        }
+        public void gameLevel(IranianAgent iranian)
+        {
             string gess;
-            iranian = initGame();
+
             foreach (var item in iranian.listSensor)
             {
                 Console.Write(item.Name + "   ");
             }
             while (true)
+
             {
 
                 Console.WriteLine("please enter your gess");
 
                 gess = Console.ReadLine();
+
+                iranian.countGessTrueFalse += 1;
+
                 checkSensorGess(gess, iranian);
+
                 foreach (var item in iranian.gessList)
                 {
                     Console.Write(item + "   ");
                 }
+                Console.WriteLine(" ");
+
 
             }
-
-
-
-
-
-
         }
-
-
         public void checkSensorGess(string gess, IranianAgent iranian)
         {
+            bool found = false;
+            string temrery;
 
 
 
-
-            if (Sensor.active(iranian, gess))//אם יש לו את הסנסורים האלה אז הוא מחזיר True 
+            foreach (var sensor in iranian.listSensor)
             {
+                if (sensor.active(iranian, gess))
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                iranian.TrueGessList.Add(gess);
+
 
                 iranian.gessList.Remove(gess);
+
                 iranian.countTrueGess += 1;
-                Console.WriteLine($"you find until now   {iranian.countTrueGess} to complit the mision you need to find {iranian.listSensor.Count - iranian.countTrueGess} more ");
+                iranian.countFalse = 0;//מתאפס כל פעם שיש לו ניחוש נכון
+
+
+
+                Console.WriteLine($"you find until now   {iranian.TrueGessList.Count} to complit the mision you need to find " +
+                    $"{iranian.listSensor.Count - iranian.TrueGessList.Count} more ");
+                Console.WriteLine(" ");
                 if (iranian.gessList.Count == 0)
                 {
-                    Console.WriteLine("!@#$%^&*()(^%$#@#$%^%$#");
+
+                    Console.WriteLine("you finish level{nu@#$%^&*)*&^%$#@}");
                 }
-
-
             }
             else
             {
+                Console.WriteLine("");
+
+
                 Console.WriteLine("=================");
+
                 Console.WriteLine("you mising the gess");
+
+                iranian.countFalse += 1;
+
+
+                if ((iranian.LevelRank == 2) && (iranian.countFalse >= 3) && (iranian.TrueGessList.Count > 0))//תנאי לסוכן המיוחד
+                {
+                    temrery = iranian.TrueGessList[iranian.TrueGessList.Count - 1];//מקבל את הארחון שהונכס
+
+                    iranian.TrueGessList.Remove(temrery);
+                    iranian.gessList.Add(temrery);
+
+                }
+
+                Console.WriteLine("");
             }
-
-
-
-
-
         }
-        public IranianAgent initGame()
+
+
+
+        public IranianAgent initGame(int numberLevel)
         {
 
-            IranianAgent person = creatAgent();
+            IranianAgent person = creatAgent(numberLevel);
             return person;
         }
 
 
-        public IranianAgent creatAgent()
+        public IranianAgent creatAgent(int numberLevel)
         {
-            IranianAgent person = RandomIranianAgent();
+            IranianAgent person = RandomIranianAgent(numberLevel);
             return person;
         }
-        public IranianAgent RandomIranianAgent()
+        public IranianAgent RandomIranianAgent(int numberLevel)
         {
-            List<string> anmeSensor = new List<string>() { "cellPhone", "SensorMoving" };
+            List<string> anmeSensor = new List<string>() { "cellPhone", "SensorMoving", "PulseSensor" };
 
             List<Sensor> sensorList = new List<Sensor>();
 
             Random rnd = new Random();
 
-            for (int i = 0; i < 2; i++)//יצירת 2 סנסורים
+            for (int i = 0; i < numberLevel * 2; i++)
             {
                 sensorList.Add(creatSensor(anmeSensor[rnd.Next(0, anmeSensor.Count)]));
             }
-            IranianAgent person = new IranianAgent("mohmad", 3, sensorList);
+            IranianAgent person = new IranianAgent("mohmad", 3, sensorList, numberLevel);
 
 
             return person;
@@ -118,6 +185,9 @@ namespace investigationChagay
                     break;
                 case "SensorMoving":
                     sensor = new Sensor("SensorMoving", 100);
+                    break;
+                case "PulseSensor":
+                    sensor = new PulseSensor("PulseSensor", 100);
                     break;
                 default:
                     return null;

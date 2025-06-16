@@ -18,7 +18,7 @@ namespace investigationChagay
 
         }
           
-        public static bool active(IranianAgent agent,string gess)
+        public virtual  bool active(IranianAgent agent,string gess)
         {
 
             for (int i = 0; i < agent.gessList.Count; i++)
@@ -34,12 +34,7 @@ namespace investigationChagay
 
 
         }
-          
-            
-           
-
-        
-        
+       
     }
     public class SensorMoving:Sensor
     {
@@ -57,6 +52,43 @@ namespace investigationChagay
 
         }
 
+
+    }
+    public class PulseSensor : Sensor
+    {
+        public int numberGessAfterPLusfind = 0;
+        public PulseSensor(string name, int battery) : base(name, battery)
+        {
+
+        }
+
+        public override bool active(IranianAgent agent, string gess)
+        {
+            
+            if (agent.TrueGessList.Contains("PulseSensor"))
+            {
+                numberGessAfterPLusfind += 1;
+            }
+            if (numberGessAfterPLusfind >= 3&& agent.TrueGessList.Contains("PulseSensor"))
+            {
+                agent.TrueGessList.Remove("PulseSensor");//מוריד ממה שנחש נכון
+                agent.gessList.Add("PulseSensor");//נשאר לו לנחש את זה עוד פעם
+                numberGessAfterPLusfind = 0;
+            }
+
+            for (int i = 0; i < agent.gessList.Count; i++)
+            {
+                if (agent.gessList[i] == gess)
+                {
+                    
+                    return true;
+                }
+            }
+
+            return false;
+
+
+        }
 
     }
 
