@@ -6,41 +6,41 @@ using System.Threading.Tasks;
 
 namespace investigationChagay
 {
+
+
+
     public class Sensor
     {
-        public string  Name;
+        public string Name;
         public int Battery;
-       
-        public Sensor(string name,int battary )
+
+        public Sensor(string name, int battary)
         {
             Name = name;
             Battery = battary;
 
         }
-          
-        public virtual  bool active(IranianAgent agent,string gess)
+
+        public virtual bool active(IranianAgent agent, string gess)
         {
 
-            for (int i = 0; i < agent.gessList.Count; i++)
+            if (agent.gessList.Contains(gess))
             {
-                if (agent.gessList[i] == gess)
-                {
-                 
-                    return true;
-                }
+                return true;
             }
-           
             return false;
 
 
+
+
         }
-       
+
     }
-    public class SensorMoving:Sensor
+    public class SensorMoving : Sensor
     {
-        public SensorMoving(string name,int battery) : base(name,battery)
+        public SensorMoving(string name, int battery) : base(name, battery)
         {
-            
+
         }
 
 
@@ -64,65 +64,57 @@ namespace investigationChagay
 
         public override bool active(IranianAgent agent, string gess)
         {
-            
+
             if (agent.TrueGessList.Contains("PulseSensor"))
             {
                 numberGessAfterPLusfind += 1;
             }
-            if (numberGessAfterPLusfind >= 3&& agent.TrueGessList.Contains("PulseSensor"))
+            if (numberGessAfterPLusfind >= 3 && agent.TrueGessList.Contains("PulseSensor"))
             {
                 agent.TrueGessList.Remove("PulseSensor");//מוריד ממה שנחש נכון
                 agent.gessList.Add("PulseSensor");//נשאר לו לנחש את זה עוד פעם
                 numberGessAfterPLusfind = 0;
             }
 
-            for (int i = 0; i < agent.gessList.Count; i++)
+            if (agent.gessList.Contains(gess))
             {
-                if (agent.gessList[i] == gess)
-                {
-                    
-                    return true;
-                }
+                return true;
             }
-
             return false;
 
 
+
+
         }
-        public class SignalSensor:Sensor
+    }
+    public class SignalSensor : Sensor
+    {
+        public SignalSensor(string name, int battery) : base(name, battery)
         {
-            public SignalSensor(string name, int battery) : base(name, battery)
-            {
-
-            }
-
-            public override bool active(IranianAgent agent, string gess)
-            {
-               
-                if (gess == "SignalSensor")
-                {
-                    Console.WriteLine("");
-                    ConsoleHelper.PrintRed(agent.Name);
-                    Console.WriteLine("");
-
-                }
-
-                for (int i = 0; i < agent.gessList.Count; i++)
-                {
-                    if (agent.gessList[i] == gess)
-                    {
-
-                        return true;
-                    }
-                }
-
-                return false;
-
-            }
 
         }
+
+        public override bool active(IranianAgent agent, string gess)
+        {
+
+
+            ConsoleHelper.PrintRed(agent.Name);
+
+            if (agent.gessList.Contains(gess))
+            {
+                return true;
+            }
+            return false;
+
+
+
+
+        }
+
+
 
     }
-
-
 }
+
+
+

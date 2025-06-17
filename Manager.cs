@@ -9,11 +9,25 @@ namespace investigationChagay
 {
     internal class Manager
     {
+        private static Manager instance; // שדה סטטי ששומר את האובייקט היחיד
+        private Manager() { } // בנאי פרטי – אף אחד לא יכול לעשות new מבחוץ
+
+        public static Manager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Manager(); // יצירה ראשונה
+                }
+                return instance; // תמיד מחזיר את אותו מופע
+            }
+        }
         IranianAgent iranian;
 
-        public void Game()
+        public void startGame()
         {
-            Console.WriteLine(  "chose a level do u want 1 or 2");
+            Console.WriteLine( "chose a level do u want 1 or 2");
             switch (Console.ReadLine())
             {
                 case "1":
@@ -34,7 +48,7 @@ namespace investigationChagay
 
                     {
                         Console.WriteLine("!@#$%^&*()");
-                        Game();
+                        startGame();
                     }
                     break;
 
@@ -53,6 +67,8 @@ namespace investigationChagay
             {
                 Console.Write(sensor.Name + "   ");
             }
+            Console.WriteLine("all the agent sensores");
+            Console.WriteLine( "");
             while (true)
 
             {
@@ -65,9 +81,9 @@ namespace investigationChagay
 
                 checkSensorGess(gess, iranian);
 
-                foreach (var sensor in iranian.listSensor)
+                foreach (var sensor in iranian.gessList)
                 {
-                    Console.Write(sensor.Name + "   ");
+                    Console.Write(sensor + "   ");
                 }
                 Console.WriteLine(" ");
 
@@ -81,12 +97,13 @@ namespace investigationChagay
             string temrery;
 
 
-
+            
             foreach (var sensor in iranian.listSensor)
             {
-               
-                if (sensor.active(iranian, gess))
+
+                if((sensor.Name==gess) && (sensor.active(iranian, gess)))
                 {
+                    Console.WriteLine(sensor.Name);
                     found = true;
                     break;
                 }
@@ -106,9 +123,11 @@ namespace investigationChagay
 
                 Console.WriteLine($"you find until now   {iranian.TrueGessList.Count} to complit the mision you need to find " +
                     $"{iranian.listSensor.Count - iranian.TrueGessList.Count} more ");
+
                 Console.WriteLine(" ");
                 if (iranian.gessList.Count == 0)
                 {
+                    
 
                     Console.WriteLine("you finish level{nu@#$%^&*)*&^%$#@}");
                 }
@@ -127,6 +146,7 @@ namespace investigationChagay
 
                 if ((iranian.LevelRank == 2) && (iranian.countFalse >= 3) && (iranian.TrueGessList.Count > 0))//תנאי לסוכן המיוחד
                 {
+                    iranian.countFalse=0 ;//מאפס אותו שיהיה לו עוד פעם שלוש אופציות
                     temrery = iranian.TrueGessList[iranian.TrueGessList.Count - 1];//מקבל את הארחון שהונכס
 
                     iranian.TrueGessList.Remove(temrery);
@@ -135,6 +155,11 @@ namespace investigationChagay
                 }
 
                 Console.WriteLine("");
+                foreach (var sensor in iranian.gessList)
+                {
+                    Console.Write(sensor + "   ");
+                }
+                Console.WriteLine(" ");
             }
         }
 
@@ -155,54 +180,25 @@ namespace investigationChagay
         }
         public IranianAgent RandomIranianAgent(int numberLevel)
         {
-            List<string> anmeSensor = new List<string>() { "cellPhone", "SensorMoving", "PulseSensor", "SignalSensor" };
-
+            List<string> sensorTypes = new List<string>() {"cellPhone","SensorMoving","PulseSensor", "SignalSensor" }; 
             List<Sensor> sensorList = new List<Sensor>();
-
             Random rnd = new Random();
 
             for (int i = 0; i < numberLevel * 2; i++)
             {
-                sensorList.Add(creatSensor(anmeSensor[rnd.Next(0, anmeSensor.Count)]));
+                string randomSensor = sensorTypes[rnd.Next(sensorTypes.Count)];
+                Sensor sensor = SensorFactory.CreateSensor(randomSensor);
+
+                if (sensor != null)
+                {
+                    sensorList.Add(sensor);
+                }
             }
+
             IranianAgent person = new IranianAgent("mohmad", 3, sensorList, numberLevel);
-
-
             return person;
-
-
-
-
-
-
         }
-        public Sensor creatSensor(string nameSensor)
-        {
-            Sensor sensor;
-            switch (nameSensor)
-            {
-                case "cellPhone":
 
-                    sensor = new Sensor("cellPhone", 100);
-
-                    break;
-                case "SensorMoving":
-                    sensor = new Sensor("SensorMoving", 100);
-                    break;
-                case "PulseSensor":
-                    sensor = new PulseSensor("PulseSensor", 100);
-                    break;
-                case "SignalSensor":
-                    sensor = new SignalSensor("SignalSensor", 100);
-                    break;
-                default:
-                    return null;
-                    break;
-
-
-            }
-            return sensor;
-
-        }
+      
     }
 }
