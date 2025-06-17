@@ -5,8 +5,11 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-            Manager man = new Manager();
-            man.Game();
+
+            Manager.Instance.gameControl();
+
+
+           
         }
        
     }
