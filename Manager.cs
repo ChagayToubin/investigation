@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static investigationChagay.PulseSensor;
 
 namespace investigationChagay
 {
@@ -12,19 +13,19 @@ namespace investigationChagay
 
         public void Game()
         {
-
+            Console.WriteLine(  "chose a level do u want 1 or 2");
             switch (Console.ReadLine())
             {
                 case "1":
                     {
-                        iranian = initGame(1);
+                        iranian = initIranian(1);
                         gameLevel(iranian);
                     }
                     break;
                 case "2":
 
                     {
-                        iranian = initGame(2);
+                        iranian = initIranian(2);
 
                         gameLevel(iranian);
                     }
@@ -48,9 +49,9 @@ namespace investigationChagay
         {
             string gess;
 
-            foreach (var item in iranian.listSensor)
+            foreach (var sensor in iranian.listSensor)
             {
-                Console.Write(item.Name + "   ");
+                Console.Write(sensor.Name + "   ");
             }
             while (true)
 
@@ -64,11 +65,12 @@ namespace investigationChagay
 
                 checkSensorGess(gess, iranian);
 
-                foreach (var item in iranian.gessList)
+                foreach (var sensor in iranian.listSensor)
                 {
-                    Console.Write(item + "   ");
+                    Console.Write(sensor.Name + "   ");
                 }
                 Console.WriteLine(" ");
+
 
 
             }
@@ -82,6 +84,7 @@ namespace investigationChagay
 
             foreach (var sensor in iranian.listSensor)
             {
+               
                 if (sensor.active(iranian, gess))
                 {
                     found = true;
@@ -137,7 +140,7 @@ namespace investigationChagay
 
 
 
-        public IranianAgent initGame(int numberLevel)
+        public IranianAgent initIranian(int numberLevel)
         {
 
             IranianAgent person = creatAgent(numberLevel);
@@ -152,7 +155,7 @@ namespace investigationChagay
         }
         public IranianAgent RandomIranianAgent(int numberLevel)
         {
-            List<string> anmeSensor = new List<string>() { "cellPhone", "SensorMoving", "PulseSensor" };
+            List<string> anmeSensor = new List<string>() { "cellPhone", "SensorMoving", "PulseSensor", "SignalSensor" };
 
             List<Sensor> sensorList = new List<Sensor>();
 
@@ -188,6 +191,9 @@ namespace investigationChagay
                     break;
                 case "PulseSensor":
                     sensor = new PulseSensor("PulseSensor", 100);
+                    break;
+                case "SignalSensor":
+                    sensor = new SignalSensor("SignalSensor", 100);
                     break;
                 default:
                     return null;

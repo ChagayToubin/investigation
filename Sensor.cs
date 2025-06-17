@@ -89,6 +89,38 @@ namespace investigationChagay
 
 
         }
+        public class SignalSensor:Sensor
+        {
+            public SignalSensor(string name, int battery) : base(name, battery)
+            {
+
+            }
+
+            public override bool active(IranianAgent agent, string gess)
+            {
+               
+                if (gess == "SignalSensor")
+                {
+                    Console.WriteLine("");
+                    ConsoleHelper.PrintRed(agent.Name);
+                    Console.WriteLine("");
+
+                }
+
+                for (int i = 0; i < agent.gessList.Count; i++)
+                {
+                    if (agent.gessList[i] == gess)
+                    {
+
+                        return true;
+                    }
+                }
+
+                return false;
+
+            }
+
+        }
 
     }
 
