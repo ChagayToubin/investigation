@@ -39,15 +39,6 @@ namespace investigationChagay
             return sensor;
         }
 
-        public static List<string> GetSensorTypes()
-        {
-            return new List<string>
-            {
-                "cellPhone",
-                "SensorMoving",
-                "PulseSensor",
-                "SignalSensor"
-            };
-        }
+       
     }
 }

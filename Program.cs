@@ -6,7 +6,7 @@
         {
             Console.WriteLine("Hello, World!");
 
-            Manager.Instance.startGame();
+            Manager.Instance.gameControl();
 
 
            
