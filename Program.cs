@@ -8,5 +8,6 @@
             Manager man = new Manager();
             man.Game();
         }
+       
     }
 }
