@@ -10,9 +10,9 @@ namespace investigationChagay
     {
         public string Name;
 
-        public int Rank;
+        public string Rank;
 
-        public int LevelRank;
+      
         public int countFalse = 0;
         public int countGessTrueFalse = 0;//סןפר את כל התשובות נכון ולא נכון
 
@@ -24,12 +24,12 @@ namespace investigationChagay
         public int countTrueGess = 0;
 
         public List<string> TrueGessList;//פן מופיע כל מה שניחש ודלוק
-        public IranianAgent(string name,int rank,List<Sensor>list,int levelRank )
+        public IranianAgent(string name,string rank,List<Sensor>list )
         {
             Name = name;
             Rank = rank;
             listSensor = list;
-            LevelRank = levelRank;
+           
 
 
 
@@ -60,7 +60,7 @@ namespace investigationChagay
     public class SquadLeader: IranianAgent
     {
 
-        public SquadLeader(string name, int rank, List<Sensor> list,int levelRank) : base(name,rank,list, levelRank)
+        public SquadLeader(string name, string rank, List<Sensor> list,int levelRank) : base(name,rank,list)
         {
 
 

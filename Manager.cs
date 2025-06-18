@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using investigationChagay.DB.Connection;
+using investigationChagay.DB.Models;
 using static investigationChagay.PulseSensor;
 
 namespace investigationChagay
@@ -25,10 +27,17 @@ namespace investigationChagay
         }
         public void gameControl()
         {
-            GameEngine gameEngine = new GameEngine();
-            gameEngine.initGame();
-        }
 
+
+           
+
+            GameEngine gameEngine = new GameEngine();
+            var plaer = GameEngine.gettheplayer();
+            gameEngine.initGame();
+
+        }
+       
+            
 
         //    IranianAgent iranian;
 
