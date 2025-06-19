@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,49 +14,56 @@ namespace investigationChagay
     public class GameEngine
     {
         public playersDAL PLYAR=new playersDAL();
-        public Player getplayer()
+
+       public void chooseLevel(Player player)
         {
-            Console.WriteLine("hello please enter your name");
-            string namePlayer = Console.ReadLine();
-            Console.WriteLine("please enter your id");
-            int idplayer =int.Parse(Console.ReadLine());
-
-            var P = PLYAR.getPLyar(namePlayer,idplayer);
-            return P;
-
-        }
-
-
-
-
-
-        public void initGame()
-        {
-            string FullName;
-
-            Console.WriteLine("To start the game please enter your full name");
-            FullName = Console.ReadLine();
             IranianAgent iranian;
 
+            switch (player.num_exposed)
+            {
+                case 0:
+                    iranian = initIranian("Foot Soldier");
+                    Start(iranian);
+                    
+                    player.num_exposed += 1;  
 
-            iranian = initIranian("Foot Soldier");
-            Start(iranian, FullName);
+                    break;
+                case 1:
+                    iranian = initIranian("Squad Leader");
 
-            Console.WriteLine("you finish the first level lets go to secound levl ");
+                    Start(iranian);
 
-            iranian = initIranian("Squad Leader");
-
-            Start(iranian, FullName);
-
-          
+                    break;
+                default:
+                    Console.WriteLine("finish the game");
+                    break;
+            }
 
         }
-        public void Start(IranianAgent iranian,string name)
+          
+        public void Game(Player player)
+        {
+            do
+            {
+                Console.WriteLine($"hello {player.name} lets start level - {player.num_exposed+1}");
+
+                chooseLevel(player);
+               
+
+                Console.WriteLine($"you finish the  level {player.num_exposed} lets go to the next one\n" +
+           $"Do you want to continio to level {player.num_exposed+1}?\n press  1 to next level to  finish the game  press any button to next level");
+
+            } while (Console.ReadLine()=="1");
+            Console.WriteLine("END OF THE GAME");
+
+            PLYAR.UpdatePlayer(player);
+
+
+
+        }
+        public void  Start(IranianAgent iranian)
         {
             string gess;
-
-
-     
 
             Console.WriteLine("");
             
@@ -68,8 +76,7 @@ namespace investigationChagay
                 Console.WriteLine("");
                 if (checkEndTheGame(iranian))
                 {
-                   
-                    finishGame(iranian, name);
+                    Console.WriteLine("\n\n\n\n");
                     break;
                 }
 
@@ -182,6 +189,7 @@ namespace investigationChagay
                 }
             }
 
+
             IranianAgent person = new IranianAgent("mohmad", numberLevel, sensorList);
             return person;
         }
@@ -204,16 +212,23 @@ namespace investigationChagay
 
         public bool checkEndTheGame(IranianAgent iranian)
         {
-            return (iranian.gessList.Count == 0 )||( iranian.countGessTrueFalse > 10);//בדיקה אם לסיים את המשחק
+            return (iranian.gessList.Count == 0 );//בדיקה אם לסיים את המשחק
            
         }
 
 
 
-        public void finishGame(IranianAgent iranian,string PlayreName)
+      
+        public Player getplayer()
         {
-            Console.WriteLine("You have finished scrolling all the sensors forward to the next step.");//לחבר לדאטה ביסס
-           
+            Console.WriteLine("hello please enter your name");
+            string namePlayer = Console.ReadLine();
+            Console.WriteLine("please enter your id");
+            int idplayer = int.Parse(Console.ReadLine());
+
+            Player P = PLYAR.getPLyar(namePlayer, idplayer);
+            return P;
+
         }
     }
 }

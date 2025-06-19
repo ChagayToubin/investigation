@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using investigationChagay.DB.Connection;
+using investigationChagay.DB.DAl;
 using investigationChagay.DB.Models;
 using static investigationChagay.PulseSensor;
 
@@ -12,6 +13,10 @@ namespace investigationChagay
     public class Manager
     {
         private static Manager instance;
+
+        GameEngine gameEngine = new GameEngine();
+
+        playersDAL PlayersDAL = new playersDAL();
         private Manager() { }
 
         public static Manager Instance
@@ -28,12 +33,11 @@ namespace investigationChagay
         public void gameControl()
         {
 
+            Player player = gameEngine.getplayer();
 
-           
+            gameEngine.Game(player);
 
-            GameEngine gameEngine = new GameEngine();
-            var plaer = GameEngine.gettheplayer();
-            gameEngine.initGame();
+            PlayersDAL.UpdatePlayer(player);
 
         }
        

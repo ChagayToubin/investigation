@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 
 
 namespace investigationChagay.DB.Models
@@ -12,11 +12,9 @@ namespace investigationChagay.DB.Models
     {
         public string name;
         public int id, num_exposed;
-        public Player(string Name,int Id)
+        public Player(string Name)
         {
             name = Name;
-            id = Id;
-
         }
         public Player() { }
 
@@ -26,12 +24,16 @@ namespace investigationChagay.DB.Models
             {
                 name = reader.GetString("name"),
                 id = reader.GetInt32("id"),
-                num_exposed=reader.GetInt32("num_exposed")
+                num_exposed = reader.GetInt32("num_exposed")
 
             };
             return player;
-          
 
+
+        }
+        public void print()
+        {
+            Console.WriteLine(this.name + " " + this.num_exposed);
         }
     }
 }

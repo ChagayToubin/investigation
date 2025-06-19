@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,13 +18,6 @@ namespace investigationChagay.DB.DAl
 
 
 
-
-        //var quary = $"INSERT INTO intelreports ( reporter_id,target_id,text )" +
-        //       $"VALUES ('{reporter.Id}', '{target.Id}', '{text}')";
-        //new MySqlCommand(quary, conn).ExecuteNonQuery();
-
-
-
         public Player getPLyar(string name, int id)
         {
             MySqlDataReader reader;
@@ -35,28 +29,72 @@ namespace investigationChagay.DB.DAl
                 var quary = $"select * from players where id={id}";
                 var cmd = new MySqlCommand(quary, conn);
 
-                reader=cmd.ExecuteReader();
-
+                reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                Console.WriteLine();
                 if (reader.Read())
                 {
+                    
                     person = Player.creatPlayer(reader);
+
+                   
                 }
                 else
                 {
-                    person = new Player(name, id);
-                }
+                    Console.WriteLine("--=-=-=-=-=-=-=-");
+                    reader.Close();
+                    ConnectioN.Open(Connect);
+                     conn = Connect;
 
-                    return person;
+                    person = new Player(name);
+                   
+                    quary = $"insert into players (name) values ('{person.name}')";
+                    new MySqlCommand(quary, conn).ExecuteNonQuery();
+
+                   
+                    
+                }
+                person.print();
+                return person;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine("שגיאה בקריאה מהמסד: " + ex.Message);
                 return null;
+            }
+           
+            
+            finally
+            {
+                ConnectioN.Close(Connect);
+            }
+           
+        }
+
+        public void UpdatePlayer(Player player)
+        {
+           
+           
+              ConnectioN.Open(Connect);
+            try
+            {
+              
+                var conn = Connect;
+                string query = $"UPDATE players SET num_exposed = {player.num_exposed} WHERE name = '{player.name}'";
+
+
+                new MySqlCommand(query, conn).ExecuteNonQuery();
+               
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
             }
             finally
             {
                 ConnectioN.Close(Connect);
             }
-            return null;
         }
     }
 

@@ -17,7 +17,7 @@ namespace investigationChagay.DB.Connection
             try
             {
                 conn = new MySqlConnection(connStr);
-                Console.WriteLine("wkwkwkkwkw");
+             
 
             }
             catch (Exception ex)
