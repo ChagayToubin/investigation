@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using investigationChagay.DB.Connection;
+using investigationChagay.DB.DAl;
+using investigationChagay.DB.Models;
 using static investigationChagay.PulseSensor;
 
 namespace investigationChagay
@@ -10,6 +13,10 @@ namespace investigationChagay
     public class Manager
     {
         private static Manager instance;
+
+        GameEngine gameEngine = new GameEngine();
+
+        playersDAL PlayersDAL = new playersDAL();
         private Manager() { }
 
         public static Manager Instance
@@ -25,10 +32,16 @@ namespace investigationChagay
         }
         public void gameControl()
         {
-            GameEngine gameEngine = new GameEngine();
-            gameEngine.initGame();
-        }
 
+            Player player = gameEngine.getplayer();
+
+            gameEngine.Game(player);
+
+            PlayersDAL.UpdatePlayer(player);
+
+        }
+       
+            
 
         //    IranianAgent iranian;
 
