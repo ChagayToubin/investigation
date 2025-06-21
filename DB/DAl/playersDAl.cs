@@ -29,21 +29,21 @@ namespace investigationChagay.DB.DAl
                 var quary = $"select * from players where id={id}";
                 var cmd = new MySqlCommand(quary, conn);
 
-                reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                reader = cmd.ExecuteReader();
                 Console.WriteLine();
                 if (reader.Read())
                 {
-                    
+                  
                     person = Player.creatPlayer(reader);
 
                    
                 }
                 else
                 {
-                    Console.WriteLine("--=-=-=-=-=-=-=-");
+                  
                     reader.Close();
-                    ConnectioN.Open(Connect);
-                     conn = Connect;
+                   
+                    conn = Connect;
 
                     person = new Player(name);
                    
@@ -53,7 +53,7 @@ namespace investigationChagay.DB.DAl
                    
                     
                 }
-                person.print();
+               
                 return person;
             }
             catch (Exception ex)
