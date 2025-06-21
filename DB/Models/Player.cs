@@ -14,7 +14,7 @@ namespace investigationChagay.DB.Models
         public int id, num_exposed;
         public Player(string Name)
         {
-            name = Name;
+            this.name = Name;
         }
         public Player() { }
 

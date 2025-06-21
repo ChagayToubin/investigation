@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("investigationChagay")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e73245e2fca34906372b35d294b57e895d204c9f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3797d800c2853ad63d30cd0444f6847085166efe")]
 [assembly: System.Reflection.AssemblyProductAttribute("investigationChagay")]
 [assembly: System.Reflection.AssemblyTitleAttribute("investigationChagay")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
